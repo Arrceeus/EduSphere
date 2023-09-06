@@ -1,44 +1,60 @@
+body {background: #F5F6FA; font-family: "Trebuchet MS", sans-serif; font-weight: bold; color: #858AA6; font-size: 20px;}
+
+.flip-card-3D-wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 300px; 
+  perspective: 900px;
+  margin: 10px auto;
+}
+
 .flip-card {
-  background-color: transparent;
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f1f1f1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-}
-
-/* This container is needed to position the front and back side */
-.flip-card-inner {
-  position: relative;
-  width: 100%;
   height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
+  transition: all 1s ease-in-out;
   transform-style: preserve-3d;
+  height: 500px;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
+.flip-card img{
+  display: block;
+  width: 300px;
+  height: 250px;
+  object-fit: cover;
 }
 
-/* Position the front and back side */
-.flip-card-front, .flip-card-back {
+
+.do-flip {transform: rotateY(-180deg);}
+
+.flip-card-btn-turn-to-back, .flip-card-btn-turn-to-front {
   position: absolute;
-  width: 100%;
+  bottom: 8px;
+  right: 8px;  
+  visibility: hidden;
+  border-radius: 10px;
+}
+
+.flip-card-btn-turn-to-back{
+    border: white;
+    background: white;
+    color: #000000;
+}
+
+.flip-card-btn-turn-to-front  {
+   border: #000000 ;
+   background: #bdf9c7;
+   color: black;
+}
+
+.flip-card-front, .flip-card-back {
   height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  position: absolute;
   backface-visibility: hidden;
+  z-index: 2;
+  border-radius: 10px;
+  border:5px solid #fa9200;
 }
 
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-/* Style the back side */
-.flip-card-back {
-  background-color: dodgerblue;
-  color: white;
-  transform: rotateY(180deg);
-}
+.flip-card-front {background: #22ec9f;}
+.flip-card-back {background: white;transform: rotateY(180deg);}
+.flip-card-front {color: white;}
+.flip-card-back h4 {color: #f2f2f2}
