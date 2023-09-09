@@ -1,11 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoSphere | Audio Notes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #fdf863, #ffb570);
+        }
+
+        .navbar-light .navbar-brand {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .features-list li {
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        #transcription-container {
+            margin: 20px 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="home-page.html">EduSphere</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Feature content -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Voice Notes</h3>
+                        <p class="card-text">Welcome to the Voice Notes feature of EduSphere. With this feature, you can
+                            easily record and save voice notes for your educational purposes. Take advantage of the
+                            following benefits:</p>
+                        <ul class="features-list">
+                            <li><strong>Effortless Recording:</strong> Record voice notes with a simple click of a
+                                button.</li>
+                            <li><strong>Convenient Playback:</strong> Easily listen to your recorded notes for revision
+                                or reference.</li>
+                            <li><strong>Organized Storage:</strong> Your voice notes are automatically stored in the
+                                cloud for easy access from any device.</li>
+                            <li><strong>Shareability:</strong> Share your voice notes with classmates for collaborative
+                                learning.</li>
+                            <li><strong>Search Functionality:</strong> Use the smart search feature to quickly find
+                                specific notes based on keywords.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="transcription-container">
+            <h5>Live Transcription:</h5>
+            <p id="transcription-text">Click the button and start speaking.</p>
+        </div>
+    </div>
+    <script>
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || null)();
+            recognition.interimResults = true;
+            recognition.continuous = true;
+
+            const transcriptionText = document.getElementById('transcription-text');
+            
+            recognition.onresult = function (event) {
+                const lastResult = event.results[event.results.length - 1];
+                const recognizedText = lastResult[0].transcript;
+
+                transcriptionText.innerText = recognizedText;
+            };
+
+            document.addEventListener('click', function (event) {
+                const element = event.target;
+                if (element.matches('#start-listening')) {
+                    recognition.start();
+                    element.disabled = true;
+                }
+            });
+
+            document.addEventListener('click', function (event) {
+                const element = event.target;
+                if (element.matches('#stop-listening')) {
+                    recognition.stop();
+                    element.disabled = true;
+
+                    const downloadButton = document.createElement('button');
+                    downloadButton.id = 'download-transcription';
+                    downloadButton.textContent = 'Download Transcription';
+                    document.body.appendChild(downloadButton);
+
+                    const downloadLink = document.createElement('a');
+                    downloadLink.id = 'download-link';
+                    downloadLink.style.display = 'none';
+                    document.body.appendChild(downloadLink);
+
+                    const downloadTranscription = function () {
+                        const transcription = transcriptionText.innerText;
+                        const transcriptionBlob = new Blob([transcription], { type: 'application/txt' });
+                        const transcriptionURL = URL.createObjectURL(transcriptionBlob);
+                        downloadLink.href = transcriptionURL;
+                        downloadLink.download = 'transcription.txt';
+                        downloadLink.click();
+                    };
+
+                    downloadButton.addEventListener('click', downloadTranscription);
+                }
+            });
+
+
+            const startButton = document.createElement('button');
+            startButton.id = 'start-listening';
+            startButton.textContent = 'Start Listening';
+            document.body.appendChild(startButton);
+
+            const stopButton = document.createElement('button');
+            stopButton.id = 'stop-listening';
+            stopButton.textContent = 'Stop Listening';
+            stopButton.disabled = true;
+            document.body.appendChild(stopButton);
+
+            recognition.onstart = function () {
+                startButton.disabled = true;
+                stopButton.disabled = false;
+            };
+
+            recognition.onend = function () {
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            };
+        } else {
+            transcriptionText.innerText = 'Speech-to-text not supported in this browser.';
+        }
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-recognition"></script>
 </body>
+
 </html>
