@@ -1,11 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EcoSphere | Group Quiz </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://bouncecss.bookie0.repl.co/bounce.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #fdf863, #ffb570);
+        }
+
+        .navbar-light .navbar-brand {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .features-list li {
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        #transcription-container {
+            margin: 20px 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">EduSphere</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Feature content -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Group Quiz</h3>
+                        <p class="card-text">Group quizzes are a dynamic and engaging feature of EduSphere that brings a sense of competition and camaraderie to the learning experience. Here's how it works:</p>
+                        <ul class="features-list">
+                            <li><strong>🌟 Challenge Your Friends: </strong>Invite your peers to join a group quiz and put your knowledge to the test. It's a fun way to compete and see who knows the subject best.
+                            </li>
+                            <li><strong>💬 Real-Time Collaboration:</strong> While taking the quiz, you can chat with your friends in real-time. Discuss questions, share insights, and learn from each other as you go.</li>
+                            <li><strong>🏆 Friendly Competition: </strong>  The leaderboard keeps track of scores, adding an element of friendly competition. Who will emerge as the quiz champion?
+                            </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-recognition"></script>
 </body>
+
 </html>
