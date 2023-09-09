@@ -8,12 +8,123 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://bouncecss.bookie0.repl.co/bounce.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #fdf863, #ffb570);
+        }
 
+        .navbar-light .navbar-brand {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .features-list li {
+            list-style-type: none;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="home-page.html">EduSphere</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Feature content -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">AI Tutor</h3>
+                        <p class="card-text">Welcome to the AI Tutor feature of EduSphere. Our AI-powered tutor is here
+                            to assist you in your learning journey. Explore the various features below:</p>
+                        <ul class="features-list">
+                            <li><strong>Real-time Adaptive Learning:</strong> Our AI tutor analyzes your performance and
+                                adapts the learning material to your preferences and skill level.</li>
+                            <li><strong>Interactive Lessons:</strong> Engage in interactive lessons, quizzes, and
+                                exercises to enhance your learning experience.</li>
+                            <li><strong>Personalized Feedback:</strong> Receive personalized feedback on assessments,
+                                guiding you towards improvement.</li>
+                            <li><strong>Progress Tracking:</strong> Monitor your progress and track your achievements
+                                throughout different learning modules.</li>
+                            <li><strong>Virtual Assistant:</strong> Ask our AI tutor questions to receive instant
+                                answers and clarification on various topics.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Chatbot interface -->
+                <div id="chatbot" class="card mt-4">
+                    <div class="card-header">AI Tutor Chat</div>
+                    <div class="card-body" id="chatbot-messages">
+                        <!-- Chatbot messages will be displayed here -->
+                    </div>
+                    <div class="card-footer">
+                        <div class="input-group">
+                            <input type="text" id="user-input" class="form-control" placeholder="Type your message">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="send-btn">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </body>
+<script>
+    // Chatbot logic
+    document.addEventListener("DOMContentLoaded", function () {
+        const chatbotForm = document.getElementById("chatbot");
+        const chatbotMessages = document.getElementById("chatbot-messages");
+        const userInput = document.getElementById("user-input");
+        const sendBtn = document.getElementById("send-btn");
+
+        sendBtn.addEventListener("click", function () {
+            const userMessage = userInput.value;
+            sendMessage(userMessage);
+        });
+
+        function sendMessage(message) {
+            const userMessage = document.createElement("p");
+            userMessage.className = "user-message";
+            userMessage.textContent = message;
+            chatbotMessages.appendChild(userMessage);
+            userInput.value = ""; // Clear user input field
+
+            const response = "Hello, how can I assist you?";
+
+            const chatbotResponse = document.createElement("p");
+            chatbotResponse.className = "chatbot-message";
+            chatbotResponse.textContent = response;
+            chatbotMessages.appendChild(chatbotResponse);
+        }
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
