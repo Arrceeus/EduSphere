@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduSphere | Group Chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link href="https://bouncecss.bookie0.repl.co/bounce.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #fdf863, #ffb570);
+        }
+
+        .navbar-light .navbar-brand {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .features-list li {
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        #chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .message {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .message .sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .message .content {
+            margin-top: 5px;
+        }
+
+        #message-input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">EduSphere</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="hero-section">
+        <div class="container">
+            <h1>Group Chat</h1>
+            <p>
+                Engage in real-time group discussions and share resources with fellow
+                students.
+            </p>
+        </div>
+    </div>
+
+    <div class="chat-section">
+        <div class="container mx-auto">
+            <div class="card" id="chat-container"></div>
+            <div class="input-group">
+                <input type="text" class="form-control" id="message-input" placeholder="Type your message here..." />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="send-button">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-KW3DT2bhlo54+3AQHcjHoM5MiWWO/Lrio1KqAuoFHD+4bz3C5OWGnjB7ZcDvauF3"
+    crossorigin="anonymous"></script>
+<script>
+    $(document).ready(() => {
+        const chatContainer = $("#chat-container");
+        const messageInput = $("#message-input");
+        const sendButton = $("#send-button");
+
+        function generateID() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+
+        function scrollToLatestMessage() {
+            chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        }
+
+        function appendMessage(sender, content) {
+            const messageID = generateID();
+            const messageHTML = `
+                <div class="message" id="${messageID}">
+                    <div class="sender">${sender}</div>
+                    <div class="content">${content}</div>
+                </div>
+            `;
+            chatContainer.append(messageHTML);
+            scrollToLatestMessage();
+        }
+
+        function sendMessage() {
+            const inputContent = messageInput.val();
+            if (inputContent.trim() !== "") {
+
+                setTimeout(() => {
+                    const sender = "You";
+                    appendMessage(sender, inputContent);
+                    messageInput.val("");
+                }, 500);
+            }
+        }
+
+        sendButton.on("click", sendMessage);
+        messageInput.on("keypress", (event) => {
+            if (event.which === 13) {
+                sendMessage();
+            }
+        });
+    });
+</script>
+
+</html>
