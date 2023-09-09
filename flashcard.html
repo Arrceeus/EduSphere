@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSphere | Flashcard generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: linear-gradient(90deg, #fdf863, #ffb570);
+        }
+
+        .navbar-light .navbar-brand {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #000;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .features-list li {
+            list-style-type: none;
+            padding: 10px 0;
+        }
+
+        #transcription-container {
+            margin: 20px 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Flashcard Generator</h2>
+        <div id="flashcard-container"></div>
+        <button id="generate-flashcard" class="btn btn-primary">Generate Flashcard</button>
+    </div>
+</body>
+<script>
+    function generateFlashcard() {
+        const flashcardContainer = document.getElementById('flashcard-container');
+        flashcardContainer.innerHTML = '';
+
+        // API
+        fetch('https://www.googleapis.com/books/v1/volumes?q=programming')
+            .then(response => response.json())
+            .then(data => {
+                const randomIndex = Math.floor(Math.random() * data.items.length);
+                const book = data.items[randomIndex];
+
+                const title = book.volumeInfo.title;
+                const authors = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown Author';
+                const publisher = book.volumeInfo.publisher ? book.volumeInfo.publisher : 'Unknown Publisher';
+                const description = book.volumeInfo.description ? book.volumeInfo.description : 'No description available';
+                const flashcards = book.volumeInfo.categories ? book.volumeInfo.categories.slice(0, 5) : [];
+
+                const flashcardHTML = `
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">${title}</h5>
+                                <p class="card-text"><strong>Author:</strong> ${authors}</p>
+                                <p class="card-text"><strong>Publisher:</strong> ${publisher}</p>
+                            </div>
+                        </div>
+                        <h4>Flashcards:</h4>
+                        <ul class="list-group">
+                            ${flashcards.map(flashcard => `
+                                <li class="list-group-item flashcard">
+                                    <div class="question">${flashcard}</div>
+                                    <div class="answer">${description}</div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+
+                flashcardContainer.innerHTML = flashcardHTML;
+
+                // Add hover effect to reveal answers
+                const flashcardList = document.querySelectorAll('.flashcard');
+                flashcardList.forEach(flashcard => {
+                    flashcard.addEventListener('mouseenter', () => {
+                        flashcard.querySelector('.answer').style.display = 'block';
+                    });
+                    flashcard.addEventListener('mouseleave', () => {
+                        flashcard.querySelector('.answer').style.display = 'none';
+                    });
+                });
+            })
+            .catch(err => {
+                console.error('An error occurred while fetching book data:', err);
+                flashcardContainer.innerHTML = 'Unable to fetch book data. Please try again.';
+            });
+    }
+
+    const generateButton = document.getElementById('generate-flashcard');
+    generateButton.addEventListener('click', generateFlashcard);
+
+    generateFlashcard();
+
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</html>
